@@ -1,2 +1,0 @@
-[console_scripts]
-torrscrape = Torrscrape.main:main

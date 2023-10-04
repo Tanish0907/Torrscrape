@@ -1,5 +1,0 @@
-click
-pandas
-qbittorrent-api
-requests
-tabulate

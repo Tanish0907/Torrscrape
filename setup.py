@@ -1,55 +1,15 @@
 from setuptools import setup, find_packages
-
+from pathlib import Path
+this_directory = Path(__file__).parent
+Long_description = (this_directory / "README.md").read_text()
 setup(
     author="Tanish",
     author_email="sharmatanish097654@gmail.com",
     description="Torrscraper is a command line tool to search and download torrents from the command line.",
     long_description_content_type='text/markdown',
-    long_description='''##How to Use 
-
-Installation
-pip install Torrscrape
-
-1)Install docker 
-  mac:https://docs.docker.com/desktop/install/mac-install/<br>
-  win:https://docs.docker.com/desktop/install/windows-install/<br>
-  linux:https://docs.docker.com/desktop/install/linux-install/<br>
-2)setup jackett:
-
-docker run -d \
-  --name=jackett \
-  -e PUID=1000 \
-  -e PGID=1000 \
-  -e TZ=Etc/UTC \
-  -e AUTO_UPDATE=true `#optional` \
-  -e RUN_OPTS= `#optional` \
-  -p 9117:9117 \
-  -v /path/to/data:/config \
-  -v /path/to/blackhole:/downloads \
-  --restart unless-stopped \
-  lscr.io/linuxserver/jackett:latest
-
-3)setup qbit web(docker):
-
-docker run -d \
-  --name=qbittorrent \
-  -e PUID=1000 \
-  -e PGID=1000 \
-  -e TZ=Etc/UTC \
-  -e WEBUI_PORT=8080 \
-  -p 8080:8080 \
-  -p 6881:6881 \
-  -p 6881:6881/udp \
-  -v /path/to/appdata/config:/config \
-  -v /path/to/downloads:/downloads \
-  --restart unless-stopped \
-  lscr.io/linuxserver/qbittorrent:latest
-
-##Usage
-torrscrape --api "jackett_apikey" --search "search_term" --catagory "catagory"
-catagories: TV,TV/Anime,Other,Movies,PC/Games''',
+    long_description=Long_description,
     name="Torrscrape",
-    version="1.0.1",
+    version="1.0.2",
     packages=find_packages(),
     install_requires=[
         "requests",
