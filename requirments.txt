@@ -1,0 +1,5 @@
+requests
+qbittorrent-api
+pandas
+tabulate
+click
