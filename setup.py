@@ -9,7 +9,7 @@ setup(
     long_description_content_type='text/markdown',
     long_description=Long_description,
     name="Torrscrape",
-    version="1.0.2",
+    version="1.0.3",
     packages=find_packages(),
     install_requires=[
         "requests",
@@ -18,6 +18,7 @@ setup(
         "tabulate",
         "click",        
     ],
+    keywords=["python","torr","torrent","torrscrape","jackett","Torrscrape"],
     entry_points={
         "console_scripts": [
             "torrscrape=Torrscrape.main:main",

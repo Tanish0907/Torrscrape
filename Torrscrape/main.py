@@ -15,11 +15,19 @@ qbit_config = {
     "password":"adminadmin"
 }
 @click.command()
-@click.option("--api", help="jackett api key", required=True)
+@click.option("--api", help="jackett api key")
 @click.option("--search", help="search term", required=True)
 @click.option("--catagory", help="catagory", required=True)
-def main(search,catagory,api):
-    jackett_config["api_key"]=api
+def main(search,catagory,api=None):
+    if api==None:
+        with open("jackett_api.json","r") as f :
+            apikey=json.load(f)
+        jackett_config["api_key"]=str(apikey["api_key"])
+    elif api != None:
+        api_key={"api_key":f"{api}"}
+        with open("jackett_api.json", "x") as outfile:
+            json.dump(api_key, outfile)
+        jackett_config["api_key"]=api
     t = search
     cat =catagory
     res = []
