@@ -5,6 +5,7 @@ from tabulate import tabulate
 import json
 from multiprocessing.dummy import Pool as ThreadPool
 import click 
+import os
 global jackett_config
 global qbit_config
 jackett_config = {"api_key":"","url":"http://localhost:9117"}
@@ -29,6 +30,8 @@ def main(search,catagory,api=None):
             exit()
     elif api != None:
         api_key={"api_key":f"{api}"}
+        if os.path.exists("./jackett_api.json"):
+            os.remove("jackett_api.json")
         with open("jackett_api.json", "x") as outfile:
             json.dump(api_key, outfile)
             print("jackett api key saved")
