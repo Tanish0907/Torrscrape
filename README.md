@@ -39,5 +39,8 @@ docker run -d \
   lscr.io/linuxserver/qbittorrent:latest
 
 ##Usage<br>
-<h3>torrscrape --api "jackett_apikey" --search "search_term" --catagory "catagory"</h3>
+<h3>save api key jackett</h3>
+<h3>torrscrape --api "jackett_apikey" </h3>
+<h1>Search</h1>
+<h3>torrscrape --search "search_term" --catagory "catagories"</h3>
 <h2>catagories: TV,TV/Anime,Other,Movies,PC/Games</h2>
