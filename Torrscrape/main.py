@@ -6,6 +6,9 @@ import json
 from multiprocessing.dummy import Pool as ThreadPool
 import click 
 import os
+import pyshorteners
+global bitly_key
+bitly_key="aa98784a33cb701c60e40aabb5dfa97c15e6aa62"
 global jackett_config
 global qbit_config
 jackett_config = {"api_key":"","url":"http://localhost:9117"}
@@ -48,13 +51,16 @@ def main(search,catagory,api=None):
         else:
             return False
 
-
+    def shorten(i):
+        s = pyshorteners.Shortener(api_key=bitly_key)
+        i= s.bitly.short(i)
+        return i
     def extract_info(i):
         item = {}
         item["Title"] = i["Title"]
         item["catagory"] = i["CategoryDesc"]
         item["source"] = i['Tracker']
-        item["link"] = i["Link"]
+        item["link"] = shorten(i["Link"])
         item["magnet"] = i["MagnetUri"]
         item["size"] = i["Size"]/1024/1024/1024
         item["size"] = round(item["size"], 2)
@@ -88,7 +94,7 @@ def main(search,catagory,api=None):
         print("no results found")
         exit()
     else:
-        print(tabulate(df.drop(["link","magnet"], axis=1), tablefmt="grid"))
+        print(tabulate(df.drop(["magnet"], axis=1), tablefmt="grid"))
         print("select the index no of the torrent to add to qbit")
         print("note:the torrent will be added to qbit only if it has a magnet link")
         print("1.Add Torrent:add index_no\n2.exit:exit")
