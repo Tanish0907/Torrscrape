@@ -15,7 +15,6 @@ setup(
         "requests",
         "qbittorrent-api",
         "pandas",
-        "tabulate",
         "click",
         "rich",        
     ],

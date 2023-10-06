@@ -1,5 +1,5 @@
 requests
 qbittorrent-api
 pandas
-tabulate
+rich
 click
