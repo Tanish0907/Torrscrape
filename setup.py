@@ -9,7 +9,7 @@ setup(
     long_description_content_type='text/markdown',
     long_description=Long_description,
     name="Torrscrape",
-    version="1.1.3",
+    version="1.1.4",
     packages=find_packages(),
     install_requires=[
         "requests",
