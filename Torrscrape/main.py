@@ -6,9 +6,7 @@ import json
 from multiprocessing.dummy import Pool as ThreadPool
 import click 
 import os
-import pyshorteners
-global bitly_key
-bitly_key="aa98784a33cb701c60e40aabb5dfa97c15e6aa62"
+from rich import print
 global jackett_config
 global qbit_config
 jackett_config = {"api_key":"","url":"http://localhost:9117"}
@@ -49,18 +47,14 @@ def main(search,catagory,api=None):
         if i["catagory"] == catagory:
             return True
         else:
-            return False
-
-    def shorten(i):
-        s = pyshorteners.Shortener(api_key=bitly_key)
-        i= s.bitly.short(i)
-        return i
+            return False      
     def extract_info(i):
         item = {}
         item["Title"] = i["Title"]
         item["catagory"] = i["CategoryDesc"]
         item["source"] = i['Tracker']
-        item["link"] = shorten(i["Link"])
+        lnk=i["Link"]
+        item["link"] = f"[link={lnk}]LINK[/link]!"
         item["magnet"] = i["MagnetUri"]
         item["size"] = i["Size"]/1024/1024/1024
         item["size"] = round(item["size"], 2)
