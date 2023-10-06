@@ -1,12 +1,12 @@
 import requests
 import qbittorrentapi
 import pandas
-from tabulate import tabulate
 import json
 from multiprocessing.dummy import Pool as ThreadPool
 import click 
 import os
 from rich import print
+from rich.table import Table
 global jackett_config
 global qbit_config
 jackett_config = {"api_key":"","url":"http://localhost:9117"}
@@ -48,13 +48,27 @@ def main(search,catagory,api=None):
             return True
         else:
             return False      
+    def table_print(dataframe: pandas.DataFrame):
+        table = Table(title="list of torrents")
+        table.add_column("Index", justify="right", style="cyan", no_wrap=True)
+        table.add_column("Title", style="magenta")
+        table.add_column("Catagory", justify="right", style="green")
+        table.add_column("Size", justify="right", style="red", no_wrap=True)
+        table.add_column("Source", justify="right", style="green", no_wrap=True)
+        table.add_column("Link", justify="right", style="blue", no_wrap=True)
+        table.add_column("Qbit", justify="right", style="purple", no_wrap=True)
+        for i in range(len(dataframe)):
+            table.add_row(str(i),dataframe.loc[i,"Title"],dataframe.loc[i,"catagory"],dataframe.loc[i,"size"],dataframe.loc[i,"source"],dataframe.loc[i,"link"],str(dataframe.loc[i,"qbit"]))
+        print(table)
+        
+
     def extract_info(i):
         item = {}
         item["Title"] = i["Title"]
         item["catagory"] = i["CategoryDesc"]
         item["source"] = i['Tracker']
         lnk=i["Link"]
-        item["link"] = f"[link={lnk}]LINK[/link]!"
+        item["link"] = f"[link={lnk}]LINK[/link]"
         item["magnet"] = i["MagnetUri"]
         item["size"] = i["Size"]/1024/1024/1024
         item["size"] = round(item["size"], 2)
@@ -88,7 +102,8 @@ def main(search,catagory,api=None):
         print("no results found")
         exit()
     else:
-        print(tabulate(df.drop(["magnet"], axis=1), tablefmt="grid"))
+        # print(df.drop(["magnet"], axis=1))
+        table_print(df)
         print("select the index no of the torrent to add to qbit")
         print("note:the torrent will be added to qbit only if it has a magnet link")
         print("1.Add Torrent:add index_no\n2.exit:exit")
