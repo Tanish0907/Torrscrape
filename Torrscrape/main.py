@@ -20,7 +20,7 @@ qbit_config = {
 @click.option("--api", help="jackett api key")
 @click.option("--search", help="search term")
 @click.option("--catagory", help="catagory")
-def main(search,catagory,api=None):
+def main(search,catagory=None,api=None):
     if api==None:
         try:
             with open("jackett_api.json","r") as f :
@@ -39,8 +39,8 @@ def main(search,catagory,api=None):
         exit()
     t = search
     cat =catagory
-    if t == None or cat == None:
-        print("please provide a search term and a catagory")
+    if t == None:
+        print("please provide a search term ")
         exit()
     res = []
     def filter(i, catagory=cat):
@@ -77,8 +77,11 @@ def main(search,catagory,api=None):
             item["qbit"] = True
         else:
             item["qbit"] = False
-        if filter(item):
+        if cat==None:
             res.append(item)
+        else:
+            if filter(item):
+                res.append(item)
     url = f"{jackett_config['url']}/api/v2.0/indexers/all/results?apikey={jackett_config['api_key']}&Query="
     qbt_client = qbittorrentapi.Client(**qbit_config)
     try:
