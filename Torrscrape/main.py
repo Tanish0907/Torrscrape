@@ -88,8 +88,8 @@ def main(search,catagory=None,api=None):
         qbt_client.auth_log_in()
         print("connected to qbit")
     except qbittorrentapi.LoginFailed as e:
-        print("login failed")
-        exit()
+        print("failed to login (qbit) ")
+        pass
     print("Searching for torrents..........")
     url=url+t
     r = requests.get(url)
